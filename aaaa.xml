@@ -1,55 +1,50 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <limits>
+import java.util.ArrayList;
+import java.util.Scanner;
 
-using namespace std;
+public class GestorTareas {
+    public static void main(String[] args) {
+        ArrayList<String> tareas = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        int opcion = 0;
 
-void mostrarMenu() {
-    cout << "\n--- GESTOR DE TAREAS ---" << endl;
-    cout << "1. Agregar tarea" << endl;
-    cout << "2. Ver tareas" << endl;
-    cout << "3. Salir" << endl;
-    cout << "Seleccione una opcion: ";
-}
+        while (opcion != 3) {
+            System.out.println("\n--- GESTOR DE TAREAS (JAVA) ---");
+            System.out.println("1. Agregar tarea");
+            System.out.println("2. Ver lista");
+            System.out.println("3. Salir");
+            System.out.print("Seleccione una opcion: ");
 
-int main() {
-    vector<string> tareas;
-    int opcion = 0;
-    string nuevaTarea;
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ingrese un numero del 1 al 3.");
+                continue;
+            }
 
-    while (opcion != 3) {
-        mostrarMenu();
-        
-        if (!(cin >> opcion)) {
-            cout << "Por favor, ingrese un numero valido." << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            continue;
+            switch (opcion) {
+                case 1:
+                    System.out.print("Descripcion de la tarea: ");
+                    String nuevaTarea = scanner.nextLine();
+                    tareas.add(nuevaTarea);
+                    System.out.println("¡Tarea agregada con exito!");
+                    break;
+                case 2:
+                    System.out.println("\n--- MIS PENDIENTES ---");
+                    if (tareas.isEmpty()) {
+                        System.out.println("La lista esta vacia.");
+                    } else {
+                        for (int i = 0; i < tareas.size(); i++) {
+                            System.out.println((i + 1) + ". " + tareas.get(i));
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("Cerrando aplicacion...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida.");
+            }
         }
-
-        cin.ignore(); // Limpiar el buffer para usar getline
-
-        switch (opcion) {
-            case 1:
-                cout << "Escriba la tarea: ";
-                getline(cin, nuevaTarea);
-                tareas.push_back(nuevaTarea);
-                cout << "¡Tarea guardada!" << endl;
-                break;
-            case 2:
-                cout << "\n--- LISTA DE PENDIENTES ---" << endl;
-                if (tareas.empty()) cout << "No hay tareas." << endl;
-                for (size_t i = 0; i < tareas.size(); ++i) {
-                    cout << i + 1 << ". " << tareas[i] << endl;
-                }
-                break;
-            case 3:
-                cout << "Saliendo del programa..." << endl;
-                break;
-            default:
-                cout << "Opcion no reconocida." << endl;
-        }
+        scanner.close();
     }
-    return 0;
 }
