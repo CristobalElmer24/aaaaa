@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <limits>
+
+using namespace std;
+
+void mostrarMenu() {
+    cout << "\n--- GESTOR DE TAREAS ---" << endl;
+    cout << "1. Agregar tarea" << endl;
+    cout << "2. Ver tareas" << endl;
+    cout << "3. Salir" << endl;
+    cout << "Seleccione una opcion: ";
+}
+
+int main() {
+    vector<string> tareas;
+    int opcion = 0;
+    string nuevaTarea;
+
+    while (opcion != 3) {
+        mostrarMenu();
+        
+        if (!(cin >> opcion)) {
+            cout << "Por favor, ingrese un numero valido." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        cin.ignore(); // Limpiar el buffer para usar getline
+
+        switch (opcion) {
+            case 1:
+                cout << "Escriba la tarea: ";
+                getline(cin, nuevaTarea);
+                tareas.push_back(nuevaTarea);
+                cout << "¡Tarea guardada!" << endl;
+                break;
+            case 2:
+                cout << "\n--- LISTA DE PENDIENTES ---" << endl;
+                if (tareas.empty()) cout << "No hay tareas." << endl;
+                for (size_t i = 0; i < tareas.size(); ++i) {
+                    cout << i + 1 << ". " << tareas[i] << endl;
+                }
+                break;
+            case 3:
+                cout << "Saliendo del programa..." << endl;
+                break;
+            default:
+                cout << "Opcion no reconocida." << endl;
+        }
+    }
+    return 0;
+}
